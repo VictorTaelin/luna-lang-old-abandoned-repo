@@ -1,0 +1,52 @@
+no var duplications
+
+bruijn levels: needs readjusments
+λλ(λλ(3 2) λλ(0 1 2 3))
+λλλ(2 λλ(0 1 3 4))
+
+bruijn indices: needs readjustments
+λλ(λλ(0 1) λλ(3 2 1 0))
+λλλ(0 λλ(4 3 1 0))
+
+names: no readjustments?
+λa.λb.(λc.λd.(d c) λe.λf.(a b e f))
+λa.λb.λd.(d λe.λf.(a b e f))
+
+
+(λf. F=f !λx.(F (F (F x)))) !(λg. G=g !λy.(G (G (G y))))
+(F=!(λg. G=g !λy.(G (G (G y)))) !λx.(F (F (F x))))
+!λx.((λg. G=g !λy.(G (G (G y)))) ((λg. G=g !λy.(G (G (G y)))) ((λg. G=g !λy.(G (G (G y)))) x)))
+!λx.((λg. G=g !λy.(G (G (G y)))) ((λg. G=g !λy.(G (G (G y)))) (G=x !λy.(G (G (G y))))))
+
+
+(λf. F=f !λx.(F (F x))) !(λg. G=g !λy.(G (G y)))
+F=!(λg. G=g !λy.(G (G y))) !λx.(F (F x)))
+!λx.((λg. G=g !λy.(G (G y))) ((λg. G=g !λy.(G (G y))) x))
+!λx.((λg. G=g !λy.(G (G y))) (G=x !λy.(G (G y))))
+
+
+ZER := λs. λz. z
+SUC := λn. N=n λs. S=s !λz. (S (N S z))
+
+ONE := λs. S=s !λz. (S z)
+
+(SUC !ZER) :=
+  (λn. N=n λs. S=s !λz. (S (N S z))) !(λs. λz. z)
+  (N=!(λs. λz. z) λs. S=s !λz. (S (N S z)))
+  (λs. S=s !λz. (S ((λs. λz. z) S z)))
+  (λs. S=s !λz. (S z))
+
+(SUC !ONE) :=
+  (
+
+
+(λf. F=f (F (F !SUC))) !(λg. G=g !λy.(G (G y)))
+  F=!(λg. G=g !λy.(G (G y))) (F (F !SUC)))
+  (λg. G=g !λy0.(G (G y0))) ((λg. G=g !λy1.(G (G y1))) !SUC)
+  (λg. G=g !λy0.(G (G y0))) (G=!SUC !λy1.(G (G y1)))
+  (λg. G=g !λy0.(G (G y0))) !λy1.(SUC (SUC y1))
+  G=!λy1.(SUC (SUC y1)) !λy0.(G (G y0))
+  !λy0.(λy1.(SUC (SUC y1)) (λy1.(SUC (SUC y1)) y0))
+  !λy0.(SUC (SUC (SUC (SUC y0))))
+
+
